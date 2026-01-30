@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://terrydwisely.github.io/work-automation-hub",
   "dependencies": {
     "dagre": "^0.8.5",
     "react": "^19.2.4",
