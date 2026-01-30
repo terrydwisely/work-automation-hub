@@ -1,47 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* Surface palette — warm stone */
-  --surface-0: #FAFAF8;
-  --surface-1: #F5F4F0;
-  --surface-2: #EEEDEA;
-  --surface-3: #E4E3DF;
-  --surface-4: #D6D5D0;
+  /* Surface palette — dark mode */
+  --surface-0: #111113;
+  --surface-1: #1A1A1E;
+  --surface-2: #242429;
+  --surface-3: #2E2E35;
+  --surface-4: #3A3A42;
 
   /* Text palette */
-  --text-primary: #1A1917;
-  --text-secondary: #5C5B56;
-  --text-tertiary: #8C8B85;
-  --text-inverse: #FAFAF8;
+  --text-primary: #ECECEF;
+  --text-secondary: #A0A0A8;
+  --text-tertiary: #6E6E78;
+  --text-inverse: #111113;
 
   /* Brand — construction amber */
-  --brand-primary: #D97706;
+  --brand-primary: #E8930C;
   --brand-light: #FDE68A;
-  --brand-surface: #FFFBEB;
+  --brand-surface: #2A2010;
 
-  /* Status colors */
-  --status-automated: #059669;
-  --status-automated-light: #D1FAE5;
-  --status-manual: #DC2626;
-  --status-manual-light: #FEE2E2;
-  --status-notify: #D97706;
-  --status-notify-light: #FEF3C7;
-  --status-pending: #6B7280;
-  --status-pending-light: #F3F4F6;
+  /* Status colors — adjusted for dark bg */
+  --status-automated: #34D399;
+  --status-automated-light: #0D2E22;
+  --status-manual: #F87171;
+  --status-manual-light: #2D1516;
+  --status-notify: #FBBF24;
+  --status-notify-light: #2A2010;
+  --status-pending: #9CA3AF;
+  --status-pending-light: #1F1F25;
 
-  /* Category colors — muted professional */
-  --cat-meetings: #3B82F6;
-  --cat-meetings-light: #EFF6FF;
-  --cat-scheduling: #10B981;
-  --cat-scheduling-light: #ECFDF5;
-  --cat-communication: #F59E0B;
-  --cat-communication-light: #FFFBEB;
+  /* Category colors */
+  --cat-meetings: #60A5FA;
+  --cat-meetings-light: #14213A;
+  --cat-scheduling: #34D399;
+  --cat-scheduling-light: #0D2E22;
+  --cat-communication: #FBBF24;
+  --cat-communication-light: #2A2010;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.06);
-  --shadow-md: 0 2px 4px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.08);
-  --shadow-lg: 0 4px 8px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.1);
-  --shadow-xl: 0 8px 16px rgba(0,0,0,0.06), 0 16px 48px rgba(0,0,0,0.12);
+  /* Shadows — stronger for dark */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2), 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 2px 4px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.35);
+  --shadow-lg: 0 4px 8px rgba(0,0,0,0.2), 0 8px 24px rgba(0,0,0,0.4);
+  --shadow-xl: 0 8px 16px rgba(0,0,0,0.25), 0 16px 48px rgba(0,0,0,0.45);
 
   /* Radii */
   --radius-sm: 6px;
@@ -83,9 +83,10 @@ body {
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: default;
 }
 
-/* ReactFlow overrides for light theme */
+/* ReactFlow overrides for dark theme */
 .react-flow__background {
   background: var(--surface-0) !important;
 }
@@ -105,7 +106,7 @@ body {
 }
 
 .react-flow__controls-button {
-  background: var(--surface-0) !important;
+  background: var(--surface-1) !important;
   border-bottom: 1px solid var(--surface-2) !important;
   fill: var(--text-secondary) !important;
   width: 32px !important;
@@ -113,7 +114,7 @@ body {
 }
 
 .react-flow__controls-button:hover {
-  background: var(--surface-1) !important;
+  background: var(--surface-2) !important;
   fill: var(--text-primary) !important;
 }
 
@@ -131,6 +132,11 @@ body {
 
 .react-flow__node:hover .react-flow__handle {
   opacity: 1;
+}
+
+/* Custom cursor for canvas */
+.react-flow__pane {
+  cursor: crosshair !important;
 }
 
 /* Scrollbar */

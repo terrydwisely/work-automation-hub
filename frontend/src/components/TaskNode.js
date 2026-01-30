@@ -3,16 +3,16 @@ import { Handle, Position } from 'reactflow';
 import useStore from '../store';
 
 const catColors = {
-  meetings: { primary: '#3B82F6', light: '#EFF6FF', border: '#BFDBFE' },
-  scheduling: { primary: '#10B981', light: '#ECFDF5', border: '#A7F3D0' },
-  communication: { primary: '#F59E0B', light: '#FFFBEB', border: '#FDE68A' },
+  meetings: { primary: '#60A5FA', light: '#14213A', border: '#1E3A5F' },
+  scheduling: { primary: '#34D399', light: '#0D2E22', border: '#15503A' },
+  communication: { primary: '#FBBF24', light: '#2A2010', border: '#4A3510' },
 };
 
-const defaultColors = { primary: '#6B7280', light: '#F9FAFB', border: '#E5E7EB' };
+const defaultColors = { primary: '#9CA3AF', light: '#1F1F25', border: '#2E2E35' };
 
 const handleStyle = (color) => ({
   background: color,
-  border: '2px solid white',
+  border: '2px solid #111113',
   width: 8,
   height: 8,
 });
@@ -36,7 +36,7 @@ export default function TaskNode({ data }) {
         borderRadius: 12,
         padding: '14px 22px',
         minWidth: 170,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
         display: 'flex',
         alignItems: 'center',
         gap: 10,
@@ -58,7 +58,7 @@ export default function TaskNode({ data }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: 'white',
+          color: '#111113',
           fontSize: 14,
         }}>
           {data.icon || '▦'}
@@ -67,7 +67,7 @@ export default function TaskNode({ data }) {
           <div style={{
             fontSize: 13,
             fontWeight: 600,
-            color: '#1A1917',
+            color: '#ECECEF',
             fontFamily: "'DM Sans', sans-serif",
             lineHeight: 1.3,
           }}>
@@ -75,7 +75,7 @@ export default function TaskNode({ data }) {
           </div>
           <div style={{
             fontSize: 11,
-            color: '#8C8B85',
+            color: '#6E6E78',
             fontFamily: "'DM Sans', sans-serif",
           }}>
             {data.taskCount || 0} workflow{(data.taskCount || 0) !== 1 ? 's' : ''}
@@ -94,15 +94,15 @@ export default function TaskNode({ data }) {
     <div
       onClick={handleClick}
       style={{
-        background: 'white',
-        border: data.expanded ? `2px solid ${colors.primary}` : '1px solid #E4E3DF',
+        background: '#1A1A1E',
+        border: data.expanded ? `2px solid ${colors.primary}` : '1px solid #2E2E35',
         borderRadius: 12,
         padding: 16,
         width: 260,
         cursor: 'pointer',
         boxShadow: data.expanded
-          ? `0 4px 16px ${colors.primary}20, 0 2px 4px rgba(0,0,0,0.04)`
-          : '0 2px 8px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
+          ? `0 4px 16px ${colors.primary}25, 0 2px 8px rgba(0,0,0,0.4)`
+          : '0 2px 8px rgba(0,0,0,0.3)',
         transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
         fontFamily: "'DM Sans', sans-serif",
       }}
@@ -134,7 +134,7 @@ export default function TaskNode({ data }) {
         <div style={{
           fontSize: 13,
           fontWeight: 600,
-          color: '#1A1917',
+          color: '#ECECEF',
           lineHeight: 1.35,
           flex: 1,
         }}>
@@ -144,12 +144,12 @@ export default function TaskNode({ data }) {
           width: 20,
           height: 20,
           borderRadius: 4,
-          background: data.expanded ? colors.light : '#F5F4F0',
+          background: data.expanded ? colors.light : '#242429',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           fontSize: 9,
-          color: data.expanded ? colors.primary : '#8C8B85',
+          color: data.expanded ? colors.primary : '#6E6E78',
           flexShrink: 0,
           transition: 'all 0.15s',
         }}>
@@ -169,8 +169,8 @@ export default function TaskNode({ data }) {
           fontWeight: 600,
           padding: '2px 8px',
           borderRadius: 99,
-          background: data.priority === 'high' ? '#FEE2E2' : '#F3F4F6',
-          color: data.priority === 'high' ? '#DC2626' : '#6B7280',
+          background: data.priority === 'high' ? '#2D1516' : '#1F1F25',
+          color: data.priority === 'high' ? '#F87171' : '#9CA3AF',
           textTransform: 'uppercase',
           letterSpacing: '0.03em',
         }}>
@@ -181,8 +181,8 @@ export default function TaskNode({ data }) {
           fontWeight: 500,
           padding: '2px 8px',
           borderRadius: 99,
-          background: '#F5F4F0',
-          color: '#5C5B56',
+          background: '#242429',
+          color: '#A0A0A8',
         }}>
           {data.frequency}
         </span>
@@ -191,7 +191,7 @@ export default function TaskNode({ data }) {
       {/* Summary */}
       <div style={{
         fontSize: 11.5,
-        color: '#5C5B56',
+        color: '#A0A0A8',
         lineHeight: 1.5,
         marginBottom: 12,
       }}>
@@ -205,7 +205,7 @@ export default function TaskNode({ data }) {
           justifyContent: 'space-between',
           fontSize: 10,
           fontWeight: 600,
-          color: '#8C8B85',
+          color: '#6E6E78',
           marginBottom: 4,
         }}>
           <span>AUTOMATION</span>
@@ -216,14 +216,14 @@ export default function TaskNode({ data }) {
         <div style={{
           height: 4,
           borderRadius: 2,
-          background: '#EEEDEA',
+          background: '#242429',
           overflow: 'hidden',
         }}>
           <div style={{
             height: '100%',
             width: `${pct}%`,
             borderRadius: 2,
-            background: '#059669',
+            background: '#34D399',
             transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
           }} />
         </div>

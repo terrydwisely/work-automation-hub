@@ -4,7 +4,7 @@ import { Handle, Position } from 'reactflow';
 export default function CenterNode({ data }) {
   return (
     <div style={{
-      background: 'linear-gradient(145deg, #D97706, #92400E)',
+      background: 'linear-gradient(145deg, #E8930C, #92400E)',
       borderRadius: '50%',
       width: 140,
       height: 140,
@@ -13,7 +13,7 @@ export default function CenterNode({ data }) {
       justifyContent: 'center',
       textAlign: 'center',
       padding: 24,
-      boxShadow: '0 8px 32px rgba(217, 119, 6, 0.3), 0 2px 8px rgba(0,0,0,0.1)',
+      boxShadow: '0 8px 32px rgba(232, 147, 12, 0.25), 0 2px 8px rgba(0,0,0,0.4)',
       position: 'relative',
     }}>
       {/* Outer ring */}
@@ -21,7 +21,7 @@ export default function CenterNode({ data }) {
         position: 'absolute',
         inset: -6,
         borderRadius: '50%',
-        border: '2px solid rgba(217, 119, 6, 0.2)',
+        border: '2px solid rgba(232, 147, 12, 0.25)',
         pointerEvents: 'none',
       }} />
 
@@ -45,13 +45,13 @@ export default function CenterNode({ data }) {
       </div>
 
       <Handle type="source" position={Position.Top} id="top"
-        style={{ background: '#D97706', border: '2px solid white', width: 8, height: 8 }} />
+        style={{ background: '#E8930C', border: '2px solid #111113', width: 8, height: 8 }} />
       <Handle type="source" position={Position.Bottom} id="bottom"
-        style={{ background: '#D97706', border: '2px solid white', width: 8, height: 8 }} />
+        style={{ background: '#E8930C', border: '2px solid #111113', width: 8, height: 8 }} />
       <Handle type="source" position={Position.Left} id="left"
-        style={{ background: '#D97706', border: '2px solid white', width: 8, height: 8 }} />
+        style={{ background: '#E8930C', border: '2px solid #111113', width: 8, height: 8 }} />
       <Handle type="source" position={Position.Right} id="right"
-        style={{ background: '#D97706', border: '2px solid white', width: 8, height: 8 }} />
+        style={{ background: '#E8930C', border: '2px solid #111113', width: 8, height: 8 }} />
     </div>
   );
 }

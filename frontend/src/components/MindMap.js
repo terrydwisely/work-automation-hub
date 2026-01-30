@@ -171,9 +171,9 @@ function buildNodes(tasks, categories, expandedTasks) {
           const stepY = taskY + Math.sin(sRad) * STEP_RADIUS;
 
           let stepColor = '#9CA3AF';
-          if (step.automation_level === 'full') stepColor = '#059669';
-          else if (step.automation_level === 'manual') stepColor = '#DC2626';
-          else if (step.automation_level === 'notification') stepColor = '#D97706';
+          if (step.automation_level === 'full') stepColor = '#34D399';
+          else if (step.automation_level === 'manual') stepColor = '#F87171';
+          else if (step.automation_level === 'notification') stepColor = '#FBBF24';
 
           const sEdgeAngle = getAngle(taskX, taskY, stepX, stepY);
           const sHandles = getHandleIds(sEdgeAngle);
@@ -208,7 +208,7 @@ function buildNodes(tasks, categories, expandedTasks) {
               id: `${prevStepId}-to-${stepId}`,
               source: prevStepId,
               target: stepId,
-              style: { stroke: '#D6D5D0', strokeWidth: 1, strokeDasharray: '6,4' },
+              style: { stroke: '#3A3A42', strokeWidth: 1, strokeDasharray: '6,4' },
               animated: true,
             });
           }
@@ -320,7 +320,7 @@ export default function MindMap() {
           variant="dots"
           gap={24}
           size={1.5}
-          color="#D6D5D0"
+          color="#2E2E35"
         />
         <Controls
           position="bottom-right"
@@ -332,7 +332,7 @@ export default function MindMap() {
             if (n.data?.isCategory) return n.data?.color || '#6B7280';
             return '#D6D5D0';
           }}
-          maskColor="rgba(250, 250, 248, 0.85)"
+          maskColor="rgba(17, 17, 19, 0.85)"
           position="bottom-right"
           style={{
             marginBottom: 55,
