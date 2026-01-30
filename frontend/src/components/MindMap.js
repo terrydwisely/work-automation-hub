@@ -18,9 +18,13 @@ const nodeTypes = {
   centerNode: CenterNode,
 };
 
-// Determine which handle to use based on angle from source to target
+const catIcons = {
+  meetings: '📋',
+  scheduling: '📅',
+  communication: '💬',
+};
+
 function getHandleIds(angle) {
-  // Normalize to 0-360
   const a = ((angle % 360) + 360) % 360;
   if (a >= 315 || a < 45) return { sourceHandle: 'right', targetHandle: 'left' };
   if (a >= 45 && a < 135) return { sourceHandle: 'src-bottom', targetHandle: 'top' };
@@ -32,7 +36,6 @@ function getAngle(x1, y1, x2, y2) {
   return Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
 }
 
-// Hub handle based on quadrant
 function getHubHandle(angle) {
   const a = ((angle % 360) + 360) % 360;
   if (a >= 315 || a < 45) return 'right';
@@ -41,11 +44,16 @@ function getHubHandle(angle) {
   return 'top';
 }
 
-const HUB_X = 500;
-const HUB_Y = 400;
-const CAT_RADIUS = 300;
-const TASK_RADIUS = 200;
-const STEP_RADIUS = 180;
+const HUB_X = 600;
+const HUB_Y = 450;
+const CAT_RADIUS = 320;
+const TASK_RADIUS = 240;
+const STEP_RADIUS = 220;
+
+const edgeDefaults = {
+  type: 'smoothstep',
+  animated: false,
+};
 
 function buildNodes(tasks, categories, expandedTasks) {
   const nodes = [];
@@ -61,40 +69,48 @@ function buildNodes(tasks, categories, expandedTasks) {
   const catCount = categories.length;
   const catPositions = {};
 
-  // Radial category placement
+  const tasksByCategory = {};
+  tasks.forEach((t) => {
+    if (!tasksByCategory[t.category]) tasksByCategory[t.category] = [];
+    tasksByCategory[t.category].push(t);
+  });
+
   categories.forEach((cat, i) => {
-    const angle = (360 / catCount) * i - 90; // start from top
+    const angle = (360 / catCount) * i - 90;
     const rad = (angle * Math.PI) / 180;
     const x = HUB_X + Math.cos(rad) * CAT_RADIUS;
     const y = HUB_Y + Math.sin(rad) * CAT_RADIUS;
     catPositions[cat.id] = { x, y, angle };
 
+    const catTasks = tasksByCategory[cat.id] || [];
+
     nodes.push({
       id: `cat-${cat.id}`,
       type: 'taskNode',
       position: { x, y },
-      data: { label: cat.name, color: cat.color, isCategory: true },
+      data: {
+        label: cat.name,
+        color: cat.color,
+        isCategory: true,
+        categoryId: cat.id,
+        icon: catIcons[cat.id],
+        taskCount: catTasks.length,
+      },
     });
 
     const hubHandle = getHubHandle(angle);
     const { targetHandle } = getHandleIds(angle);
 
     edges.push({
+      ...edgeDefaults,
       id: `hub-to-${cat.id}`,
       source: 'hub',
       target: `cat-${cat.id}`,
       sourceHandle: hubHandle,
       targetHandle,
-      style: { stroke: cat.color, strokeWidth: 2 },
+      style: { stroke: cat.color, strokeWidth: 2, opacity: 0.4 },
       animated: true,
     });
-  });
-
-  // Group tasks by category
-  const tasksByCategory = {};
-  tasks.forEach((t) => {
-    if (!tasksByCategory[t.category]) tasksByCategory[t.category] = [];
-    tasksByCategory[t.category].push(t);
   });
 
   Object.entries(tasksByCategory).forEach(([catId, catTasks]) => {
@@ -102,10 +118,8 @@ function buildNodes(tasks, categories, expandedTasks) {
     if (!catPos) return;
     const catObj = categories.find((c) => c.id === catId);
     const color = catObj ? catObj.color : '#999';
-
-    // Spread tasks radially around their category
     const baseAngle = catPos.angle;
-    const spreadAngle = 40;
+    const spreadAngle = 45;
 
     catTasks.forEach((task, tIdx) => {
       const taskAngle = baseAngle + (tIdx - (catTasks.length - 1) / 2) * spreadAngle;
@@ -116,9 +130,6 @@ function buildNodes(tasks, categories, expandedTasks) {
       const edgeAngle = getAngle(catPos.x, catPos.y, taskX, taskY);
       const handles = getHandleIds(edgeAngle);
 
-      // Use parentNode for group dragging when expanded
-      const parentId = expandedTasks[task.id] ? undefined : undefined;
-
       nodes.push({
         id: task.id,
         type: 'taskNode',
@@ -126,6 +137,7 @@ function buildNodes(tasks, categories, expandedTasks) {
         data: {
           label: task.title,
           color,
+          categoryId: task.category,
           priority: task.priority,
           frequency: task.frequency,
           summary: task.summary,
@@ -133,19 +145,20 @@ function buildNodes(tasks, categories, expandedTasks) {
           isCategory: false,
           expanded: expandedTasks[task.id],
           taskId: task.id,
+          steps: task.steps,
         },
       });
 
       edges.push({
+        ...edgeDefaults,
         id: `cat-${catId}-to-${task.id}`,
         source: `cat-${catId}`,
         target: task.id,
         sourceHandle: handles.sourceHandle,
         targetHandle: handles.targetHandle,
-        style: { stroke: color, strokeWidth: 1.5 },
+        style: { stroke: color, strokeWidth: 1.5, opacity: 0.35 },
       });
 
-      // Steps radially around the task when expanded
       if (expandedTasks[task.id]) {
         const stepCount = task.steps.length;
         const stepSpread = 360 / Math.max(stepCount, 1);
@@ -157,10 +170,10 @@ function buildNodes(tasks, categories, expandedTasks) {
           const stepX = taskX + Math.cos(sRad) * STEP_RADIUS;
           const stepY = taskY + Math.sin(sRad) * STEP_RADIUS;
 
-          let stepColor = '#888';
-          if (step.automation_level === 'full') stepColor = '#50C878';
-          else if (step.automation_level === 'manual') stepColor = '#E8543E';
-          else if (step.automation_level === 'notification') stepColor = '#F5A623';
+          let stepColor = '#9CA3AF';
+          if (step.automation_level === 'full') stepColor = '#059669';
+          else if (step.automation_level === 'manual') stepColor = '#DC2626';
+          else if (step.automation_level === 'notification') stepColor = '#D97706';
 
           const sEdgeAngle = getAngle(taskX, taskY, stepX, stepY);
           const sHandles = getHandleIds(sEdgeAngle);
@@ -176,27 +189,26 @@ function buildNodes(tasks, categories, expandedTasks) {
               color: stepColor,
               order: step.order,
             },
-            parentNode: task.id,
-            extent: 'parent',
           });
 
           edges.push({
+            ...edgeDefaults,
             id: `${task.id}-to-${stepId}`,
             source: task.id,
             target: stepId,
             sourceHandle: sHandles.sourceHandle,
             targetHandle: sHandles.targetHandle,
-            style: { stroke: color, strokeWidth: 1 },
+            style: { stroke: stepColor, strokeWidth: 1.5, opacity: 0.3 },
           });
 
-          // Sequential connections between steps
           if (sIdx > 0) {
             const prevStepId = `${task.id}-step-${task.steps[sIdx - 1].order}`;
             edges.push({
+              ...edgeDefaults,
               id: `${prevStepId}-to-${stepId}`,
               source: prevStepId,
               target: stepId,
-              style: { stroke: '#ccc', strokeWidth: 1, strokeDasharray: '5,5' },
+              style: { stroke: '#D6D5D0', strokeWidth: 1, strokeDasharray: '6,4' },
               animated: true,
             });
           }
@@ -213,7 +225,6 @@ export default function MindMap() {
   const categories = useStore((s) => s.categories);
   const expandedTasks = useStore((s) => s.expandedTasks);
   const groupDrag = useStore((s) => s.groupDrag);
-  const toggleGroupDrag = useStore((s) => s.toggleGroupDrag);
   const lastPositions = useRef({});
 
   const { nodes: initialNodes, edges: initialEdges } = useMemo(
@@ -226,7 +237,6 @@ export default function MindMap() {
 
   React.useEffect(() => {
     const { nodes: n, edges: e } = buildNodes(tasks, categories, expandedTasks);
-    // Preserve user-dragged positions
     const posMap = {};
     nodes.forEach((nd) => { posMap[nd.id] = nd.position; });
 
@@ -241,7 +251,6 @@ export default function MindMap() {
     setEdges(e);
   }, [expandedTasks, tasks, categories]);
 
-  // Group drag: when a parent moves, move its children too
   const handleNodesChange = useCallback((changes) => {
     if (groupDrag) {
       changes.forEach((change) => {
@@ -252,7 +261,6 @@ export default function MindMap() {
             const dx = change.position.x - prev.x;
             const dy = change.position.y - prev.y;
 
-            // Find child nodes (steps of this task, or tasks of this category)
             setNodes((nds) =>
               nds.map((n) => {
                 const isChild =
@@ -279,7 +287,6 @@ export default function MindMap() {
       });
     }
 
-    // Track positions
     changes.forEach((change) => {
       if (change.type === 'position' && change.position) {
         lastPositions.current[change.id] = { ...change.position };
@@ -290,36 +297,11 @@ export default function MindMap() {
   }, [groupDrag, onNodesChange, setNodes, edges]);
 
   return (
-    <div style={{ width: '100vw', height: '100vh', background: '#1a1a2e' }}>
-      {/* Group drag toggle */}
-      <div style={{
-        position: 'fixed',
-        top: 16,
-        right: 16,
-        zIndex: 10,
-        display: 'flex',
-        gap: 8,
-        alignItems: 'center',
-      }}>
-        <button
-          onClick={toggleGroupDrag}
-          style={{
-            background: groupDrag ? '#50C878' : '#333',
-            color: '#fff',
-            border: `2px solid ${groupDrag ? '#50C878' : '#555'}`,
-            borderRadius: 8,
-            padding: '8px 16px',
-            cursor: 'pointer',
-            fontSize: 13,
-            fontWeight: 600,
-            transition: 'all 0.2s',
-            boxShadow: groupDrag ? '0 0 12px rgba(80, 200, 120, 0.4)' : 'none',
-          }}
-        >
-          {groupDrag ? '🔗 Group Drag ON' : '🔓 Group Drag OFF'}
-        </button>
-      </div>
-
+    <div style={{
+      flex: 1,
+      height: '100%',
+      background: 'var(--surface-0)',
+    }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -327,13 +309,34 @@ export default function MindMap() {
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
         fitView
+        fitViewOptions={{ padding: 0.2 }}
         attributionPosition="bottom-left"
+        defaultEdgeOptions={edgeDefaults}
+        proOptions={{ hideAttribution: true }}
+        minZoom={0.15}
+        maxZoom={2}
       >
-        <Background color="#333" gap={20} />
-        <Controls />
+        <Background
+          variant="dots"
+          gap={24}
+          size={1.5}
+          color="#D6D5D0"
+        />
+        <Controls
+          position="bottom-right"
+          showInteractive={false}
+        />
         <MiniMap
-          nodeColor={(n) => n.data?.color || '#555'}
-          style={{ background: '#16213e' }}
+          nodeColor={(n) => {
+            if (n.type === 'centerNode') return '#D97706';
+            if (n.data?.isCategory) return n.data?.color || '#6B7280';
+            return '#D6D5D0';
+          }}
+          maskColor="rgba(250, 250, 248, 0.85)"
+          position="bottom-right"
+          style={{
+            marginBottom: 55,
+          }}
         />
       </ReactFlow>
     </div>

@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Surface palette — warm stone */
+  --surface-0: #FAFAF8;
+  --surface-1: #F5F4F0;
+  --surface-2: #EEEDEA;
+  --surface-3: #E4E3DF;
+  --surface-4: #D6D5D0;
+
+  /* Text palette */
+  --text-primary: #1A1917;
+  --text-secondary: #5C5B56;
+  --text-tertiary: #8C8B85;
+  --text-inverse: #FAFAF8;
+
+  /* Brand — construction amber */
+  --brand-primary: #D97706;
+  --brand-light: #FDE68A;
+  --brand-surface: #FFFBEB;
+
+  /* Status colors */
+  --status-automated: #059669;
+  --status-automated-light: #D1FAE5;
+  --status-manual: #DC2626;
+  --status-manual-light: #FEE2E2;
+  --status-notify: #D97706;
+  --status-notify-light: #FEF3C7;
+  --status-pending: #6B7280;
+  --status-pending-light: #F3F4F6;
+
+  /* Category colors — muted professional */
+  --cat-meetings: #3B82F6;
+  --cat-meetings-light: #EFF6FF;
+  --cat-scheduling: #10B981;
+  --cat-scheduling-light: #ECFDF5;
+  --cat-communication: #F59E0B;
+  --cat-communication-light: #FFFBEB;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 2px 4px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 8px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.1);
+  --shadow-xl: 0 8px 16px rgba(0,0,0,0.06), 0 16px 48px rgba(0,0,0,0.12);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+
+  /* Sidebar */
+  --sidebar-width: 300px;
+  --toolbar-height: 56px;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--surface-0);
+  color: var(--text-primary);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ReactFlow overrides for light theme */
+.react-flow__background {
+  background: var(--surface-0) !important;
+}
+
+.react-flow__minimap {
+  background: var(--surface-1) !important;
+  border: 1px solid var(--surface-3) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.react-flow__controls {
+  box-shadow: var(--shadow-md) !important;
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--surface-3) !important;
+  overflow: hidden;
+}
+
+.react-flow__controls-button {
+  background: var(--surface-0) !important;
+  border-bottom: 1px solid var(--surface-2) !important;
+  fill: var(--text-secondary) !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.react-flow__controls-button:hover {
+  background: var(--surface-1) !important;
+  fill: var(--text-primary) !important;
+}
+
+.react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+.react-flow__handle {
+  width: 8px !important;
+  height: 8px !important;
+  border: 2px solid var(--surface-0) !important;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-out);
+}
+
+.react-flow__node:hover .react-flow__handle {
+  opacity: 1;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
