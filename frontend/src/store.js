@@ -7,6 +7,7 @@ const useStore = create((set, get) => ({
   meta: tasksData.meta,
   selectedTask: null,
   expandedTasks: {},
+  groupDrag: true,
 
   selectTask: (taskId) => set({ selectedTask: taskId }),
 
@@ -16,6 +17,8 @@ const useStore = create((set, get) => ({
       [taskId]: !state.expandedTasks[taskId]
     }
   })),
+
+  toggleGroupDrag: () => set((state) => ({ groupDrag: !state.groupDrag })),
 
   getCategory: (categoryId) => {
     return get().categories.find(c => c.id === categoryId);

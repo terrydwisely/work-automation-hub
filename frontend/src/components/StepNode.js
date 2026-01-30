@@ -1,14 +1,14 @@
 import React from 'react';
 import { Handle, Position } from 'reactflow';
 
-export default function StepNode({ data }) {
-  const levelLabels = {
-    full: '⚡ Automated',
-    manual: '👤 Manual',
-    notification: '🔔 Notify',
-    needs_detail: '❓ Needs Detail',
-  };
+const levelLabels = {
+  full: '⚡ Automated',
+  manual: '👤 Manual',
+  notification: '🔔 Notify',
+  needs_detail: '❓ Needs Detail',
+};
 
+export default function StepNode({ data }) {
   return (
     <div style={{
       background: '#1a1a2e',
@@ -19,7 +19,15 @@ export default function StepNode({ data }) {
       maxWidth: 200,
       boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
     }}>
-      <Handle type="target" position={Position.Top} style={{ background: data.color }} />
+      <Handle type="target" position={Position.Top} id="top" style={{ background: data.color }} />
+      <Handle type="target" position={Position.Bottom} id="bottom" style={{ background: data.color }} />
+      <Handle type="target" position={Position.Left} id="left" style={{ background: data.color }} />
+      <Handle type="target" position={Position.Right} id="right" style={{ background: data.color }} />
+
+      <Handle type="source" position={Position.Top} id="src-top" style={{ background: data.color }} />
+      <Handle type="source" position={Position.Bottom} id="src-bottom" style={{ background: data.color }} />
+      <Handle type="source" position={Position.Left} id="src-left" style={{ background: data.color }} />
+      <Handle type="source" position={Position.Right} id="src-right" style={{ background: data.color }} />
 
       <div style={{
         color: '#fff',
@@ -57,8 +65,6 @@ export default function StepNode({ data }) {
           </span>
         )}
       </div>
-
-      <Handle type="source" position={Position.Bottom} style={{ background: data.color }} />
     </div>
   );
 }

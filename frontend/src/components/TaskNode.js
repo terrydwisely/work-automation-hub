@@ -30,7 +30,15 @@ export default function TaskNode({ data }) {
         transition: 'all 0.2s ease',
       }}
     >
-      <Handle type="target" position={Position.Top} style={{ background: data.color }} />
+      <Handle type="target" position={Position.Top} id="top" style={{ background: data.color }} />
+      <Handle type="target" position={Position.Bottom} id="bottom" style={{ background: data.color, top: 'auto', bottom: -4 }} />
+      <Handle type="target" position={Position.Left} id="left" style={{ background: data.color }} />
+      <Handle type="target" position={Position.Right} id="right" style={{ background: data.color }} />
+
+      <Handle type="source" position={Position.Top} id="src-top" style={{ background: data.color }} />
+      <Handle type="source" position={Position.Bottom} id="src-bottom" style={{ background: data.color }} />
+      <Handle type="source" position={Position.Left} id="src-left" style={{ background: data.color }} />
+      <Handle type="source" position={Position.Right} id="src-right" style={{ background: data.color }} />
 
       <div style={{
         color: '#fff',
@@ -77,8 +85,6 @@ export default function TaskNode({ data }) {
           </div>
         </>
       )}
-
-      <Handle type="source" position={Position.Bottom} style={{ background: data.color }} />
     </div>
   );
 }

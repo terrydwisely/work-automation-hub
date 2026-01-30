@@ -24,7 +24,10 @@ export default function CenterNode({ data }) {
       }}>
         {data.label}
       </div>
-      <Handle type="source" position={Position.Bottom} style={{ background: '#e94560' }} />
+      <Handle type="source" position={Position.Top} id="top" style={{ background: '#e94560' }} />
+      <Handle type="source" position={Position.Bottom} id="bottom" style={{ background: '#e94560' }} />
+      <Handle type="source" position={Position.Left} id="left" style={{ background: '#e94560' }} />
+      <Handle type="source" position={Position.Right} id="right" style={{ background: '#e94560' }} />
     </div>
   );
 }
