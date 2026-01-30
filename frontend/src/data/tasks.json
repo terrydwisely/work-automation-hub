@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "owner": "Terry Wisely",
+    "role": "Construction Project Manager",
+    "projects_count": 4,
+    "created": "2026-01-29",
+    "version": "0.1.0"
+  },
+  "categories": [
+    {
+      "id": "meetings",
+      "name": "Meeting Management",
+      "color": "#4A90D9"
+    },
+    {
+      "id": "scheduling",
+      "name": "Scheduling & Distribution",
+      "color": "#50C878"
+    },
+    {
+      "id": "communication",
+      "name": "Communication & Follow-ups",
+      "color": "#F5A623"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-001",
+      "title": "Meeting Minutes Automation",
+      "category": "meetings",
+      "status": "defined",
+      "priority": "high",
+      "frequency": "per-meeting",
+      "summary": "Automate the flow of subcontractor meeting notes from Otter.ai into Procore, with human review before distribution.",
+      "steps": [
+        {
+          "order": 1,
+          "action": "Extract meeting transcript/notes from Otter.ai",
+          "source": "Otter.ai",
+          "automation_level": "full",
+          "needs_detail": true
+        },
+        {
+          "order": 2,
+          "action": "Format notes for Procore entry",
+          "automation_level": "full",
+          "needs_detail": true
+        },
+        {
+          "order": 3,
+          "action": "Input meeting minutes into Procore",
+          "destination": "Procore Technologies",
+          "automation_level": "full",
+          "needs_detail": true
+        },
+        {
+          "order": 4,
+          "action": "Notify Terry for review",
+          "automation_level": "notification",
+          "needs_detail": false
+        },
+        {
+          "order": 5,
+          "action": "Terry reviews and approves",
+          "automation_level": "manual",
+          "needs_detail": false
+        },
+        {
+          "order": 6,
+          "action": "Distribute meeting minutes",
+          "automation_level": "full",
+          "needs_detail": true
+        }
+      ],
+      "tools_involved": ["Otter.ai", "Procore Technologies"]
+    },
+    {
+      "id": "task-002",
+      "title": "Schedule Update & Subcontractor Distribution",
+      "category": "scheduling",
+      "status": "defined",
+      "priority": "high",
+      "frequency": "weekly-per-project",
+      "summary": "Update internal schedule with current week's progress, distribute to all subs, send individualized follow-up emails.",
+      "steps": [
+        {
+          "order": 1,
+          "action": "Update internal schedule with current week progress",
+          "automation_level": "needs_detail",
+          "needs_detail": true
+        },
+        {
+          "order": 2,
+          "action": "Distribute updated schedule to all subcontractors",
+          "automation_level": "needs_detail",
+          "needs_detail": true
+        },
+        {
+          "order": 3,
+          "action": "Send individualized follow-up emails",
+          "automation_level": "needs_detail",
+          "needs_detail": true
+        }
+      ],
+      "tools_involved": ["Scheduling tool TBD", "Email client TBD"],
+      "scale": "4 projects"
+    }
+  ]
+}
